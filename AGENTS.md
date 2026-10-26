@@ -10,6 +10,7 @@ This repository is a modular, agent-driven career knowledge base. Markdown/YAML 
 | Analyze a JD and generate/rebuild an application | `skills/resume-generation/SKILL.md` |
 | Work directly on RenderCV YAML or rendering | `skills/rendercv/SKILL.md` |
 | Prepare for an interview from an application | `skills/interview-preparation/SKILL.md` |
+| Discover and triage jobs | `job-search/README.md` |
 
 Read the complete `SKILL.md` before acting. Never read or reuse candidate facts from files named `*.example.yml` or `*.example.md`; those are structural history only.
 
@@ -19,6 +20,7 @@ Read the complete `SKILL.md` before acting. Never read or reuse candidate facts 
 - `career/index.md`: generated references only; never a second canonical description.
 - `config/resume-variants.yaml`: presentation defaults and constraints, never career facts.
 - `applications/<id>/`: original JD, analysis, retrieval, RenderCV YAML, provenance, PDF, and review.
+- `job-search/`: disposable discovery staging. Dated shortlists and saved-job ids are personal and gitignored; never treat them as career facts.
 - RenderCV owns resume validation, typography, pagination, and PDF output. Do not add HTML/Puppeteer/LaTeX resume renderers.
 
 ## Career records

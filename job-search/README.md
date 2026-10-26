@@ -35,7 +35,9 @@ send messages or connection requests, and do not run unattended.
 
 ## Files
 
-- `2026-10-12-search.md` — first discovery run: ranked shortlist and status.
+- `README.md` — this workflow.
+- `2026-10-12-external-platforms.md` — reusable non-LinkedIn platform, sponsor, and search-strategy research.
+- `<date>-search.md` — per-run shortlist and saved ids (gitignored; local only).
 
 ## Workflow
 

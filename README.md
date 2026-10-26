@@ -42,7 +42,14 @@ career_kb/                  small deterministic CLI
 skills/                     portable agent workflows
 examples/demo/              fictional end-to-end rehearsal corpus
 docs/                       schema, migration, and operating runbook
+job-search/                 LinkedIn discovery workflow and reusable platform research
+  README.md                 search, triage, save, and promote workflow
+  <date>-search.md          per-run shortlists (gitignored)
+  <date>-external-platforms.md  non-LinkedIn boards, sponsors, and search strategies
+.opencode/opencode.json     project-scoped MCP config (LinkedIn save_job fork)
 ```
+
+Personal records under `career/`, individual `applications/<id>/` artifacts, and dated `job-search/*-search.md` runs are gitignored. The public starter ships only the scaffolding READMEs, the schema/CLI/skills, the reusable platform research, and the fictional `examples/demo/` corpus.
 
 Legacy `data/` templates are retained for migration reference, but the modular `career/` and `applications/` trees are the active architecture.
 
@@ -77,6 +84,22 @@ npx skills add rendercv/rendercv-skill
 ```
 
 The core repository workflow does not require Node or `npx`.
+
+## Job search
+
+Discovery output is a staging area, not a career source: shortlisted postings are promoted into `applications/<id>/` only when resume tailoring starts.
+
+- Workflow and criteria: [`job-search/README.md`](job-search/README.md)
+- Non-LinkedIn boards, sponsoring employers, and search strategies: [`job-search/2026-10-12-external-platforms.md`](job-search/2026-10-12-external-platforms.md)
+
+The LinkedIn path uses [`satyalyadav/linkedin-mcp-server`](https://github.com/satyalyadav/linkedin-mcp-server) at `feature/724-unsave`, which adds the `save_job` tool (absent upstream). The project-scoped MCP config lives in `.opencode/opencode.json`. To sign in once:
+
+```bash
+uvx --from "git+https://github.com/satyalyadav/linkedin-mcp-server@feature/724-unsave" \
+  mcp-server-linkedin --login
+```
+
+Treat the integration as assisted browsing: keep runs small and sequential, reuse your own signed-in session from your normal network, never send messages or connection requests, and never run it unattended. Dated shortlists and saved-job ids stay gitignored.
 
 ## Add experience
 
