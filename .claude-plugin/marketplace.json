@@ -1,20 +1,20 @@
 {
   "name": "resume-as-code-skills",
   "owner": {
-    "name": "Wang Zhiwei",
-    "url": "https://github.com/zhiweio"
+    "name": "Bruno Silva Freire",
+    "url": "https://github.com/BrunoSilvaFreire"
   },
   "metadata": {
-    "description": "Resume-as-Code: tailored resume generation, timeline polishing, and interview preparation skills.",
-    "version": "1.0.0"
+    "description": "Modular career knowledge, provenance, RenderCV resume generation, and interview preparation skills.",
+    "version": "2.0.0"
   },
   "plugins": [
     {
       "name": "resume-as-code-skills",
       "source": "./skills",
-      "description": "Three skills (resume-generation, timeline-polishing, interview-preparation) for a complete resume-as-code workflow.",
+      "description": "Four skills for evidence-grounded career records, RenderCV applications, and interview preparation.",
       "category": "productivity",
-      "tags": ["resume", "career", "interview", "yaml"]
+      "tags": ["resume", "career", "rendercv", "provenance", "interview"]
     }
   ]
 }

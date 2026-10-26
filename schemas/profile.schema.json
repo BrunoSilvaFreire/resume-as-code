@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://resume-as-code.local/schemas/profile.schema.json",
+  "title": "Candidate profile",
+  "type": "object",
+  "required": ["schema_version", "name"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "name": {"type": "string", "minLength": 1},
+    "headline": {"type": "string"},
+    "location": {"type": "string"},
+    "email": {"type": "string"},
+    "phone": {"type": "string"},
+    "website": {"type": "string", "format": "uri"},
+    "social_networks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["network", "username"],
+        "properties": {
+          "network": {"type": "string", "minLength": 1},
+          "username": {"type": "string", "minLength": 1}
+        },
+        "additionalProperties": false
+      }
+    },
+    "education": {"type": "array", "items": {"type": "object"}},
+    "certificates": {"type": "array", "items": {"type": "object"}}
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,48 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/rendercv/rendercv/refs/tags/v2.8/schema.json
+cv:
+  name: Example Candidate
+  headline: Senior Platform Engineer
+  location: Remote
+  email: example.candidate@example.com
+  website: https://example.com
+  social_networks:
+    - network: GitHub
+      username: example-candidate
+  sections:
+    summary:
+      - Platform engineer focused on reliable distributed systems, Kubernetes delivery, and practical technical leadership.
+    experience:
+      - company: Example Systems
+        position: Senior Platform Engineer
+        start_date: 2022-01
+        end_date: present
+        highlights:
+          - Reduced median incident recovery time from 45 minutes to 8 minutes by standardizing service health signals and automating rollback decisions.
+          - Increased safe production deployment frequency from weekly to daily through reusable Kubernetes deployment checks and progressive delivery.
+          - Mentored three engineers through design reviews and incident retrospectives, enabling each to own an on-call service.
+    selected_projects:
+      - name: Queue Recovery Controller
+        start_date: 2023-03
+        end_date: 2023-11
+        summary: Reliability controller for stalled queue workloads
+        highlights:
+          - Cut stalled-work recovery p99 from 12 minutes to 70 seconds with lease-based claims and bounded retries.
+          - Preserved at-least-once processing while making duplicate work observable and safe to replay.
+    skills:
+      - label: Backend
+        details: Python, PostgreSQL, distributed systems, API design
+      - label: Platform reliability
+        details: Kubernetes, progressive delivery, observability, incident response
+    education:
+      - institution: Example University
+        area: Computer Science
+        degree: BSc
+        start_date: 2012
+        end_date: 2016
+design:
+  theme: engineeringresumes
+locale:
+  language: english
+settings:
+  current_date: 2026-08-02
+

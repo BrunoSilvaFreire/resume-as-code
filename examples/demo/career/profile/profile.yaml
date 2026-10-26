@@ -1,0 +1,17 @@
+schema_version: 1
+name: Example Candidate
+headline: Senior Platform Engineer
+location: Remote
+email: example.candidate@example.com
+website: https://example.com
+social_networks:
+  - network: GitHub
+    username: example-candidate
+education:
+  - institution: Example University
+    area: Computer Science
+    degree: BSc
+    start_date: 2012
+    end_date: 2016
+certificates: []
+

@@ -1,0 +1,85 @@
+schema_version: 1
+application: 2026-08-example-platform
+claims:
+  - resume_path: cv.headline
+    output: Senior Platform Engineer
+    sources:
+      - record: demo-platform-role
+        claim: demo-platform-headline
+    transformations: [verbatim]
+    handling: verified
+    unsupported_additions: []
+  - resume_path: cv.sections.summary.0
+    output: Platform engineer focused on reliable distributed systems, Kubernetes delivery, and practical technical leadership.
+    sources:
+      - record: demo-platform-role
+        claim: demo-platform-summary
+    transformations: [verbatim, tailored]
+    handling: verified
+    unsupported_additions: []
+  - resume_path: cv.sections.experience.0.highlights.0
+    output: Reduced median incident recovery time from 45 minutes to 8 minutes by standardizing service health signals and automating rollback decisions.
+    sources:
+      - record: demo-platform-role
+        claim: demo-service-reliability
+    transformations: [verbatim, tailored]
+    handling: verified
+    unsupported_additions: []
+  - resume_path: cv.sections.experience.0.highlights.1
+    output: Increased safe production deployment frequency from weekly to daily through reusable Kubernetes deployment checks and progressive delivery.
+    sources:
+      - record: demo-platform-role
+        claim: demo-deployment-frequency
+    transformations: [verbatim, tailored]
+    handling: verified
+    unsupported_additions: []
+  - resume_path: cv.sections.experience.0.highlights.2
+    output: Mentored three engineers through design reviews and incident retrospectives, enabling each to own an on-call service.
+    sources:
+      - record: demo-platform-role
+        claim: demo-mentoring
+    transformations: [verbatim, tailored]
+    handling: verified
+    unsupported_additions: []
+  - resume_path: cv.sections.selected_projects.0.summary
+    output: Reliability controller for stalled queue workloads
+    sources:
+      - record: demo-queue-recovery
+        claim: demo-queue-correctness
+    transformations: [condensed, tailored]
+    handling: verified
+    unsupported_additions: []
+  - resume_path: cv.sections.selected_projects.0.highlights.0
+    output: Cut stalled-work recovery p99 from 12 minutes to 70 seconds with lease-based claims and bounded retries.
+    sources:
+      - record: demo-queue-recovery
+        claim: demo-queue-latency
+    transformations: [verbatim, tailored]
+    handling: verified
+    unsupported_additions: []
+  - resume_path: cv.sections.selected_projects.0.highlights.1
+    output: Preserved at-least-once processing while making duplicate work observable and safe to replay.
+    sources:
+      - record: demo-queue-recovery
+        claim: demo-queue-correctness
+    transformations: [verbatim, tailored]
+    handling: verified
+    unsupported_additions: []
+  - resume_path: cv.sections.skills.0.details
+    output: Python, PostgreSQL, distributed systems, API design
+    sources:
+      - record: demo-platform-role
+        claim: demo-platform-skills
+    transformations: [verbatim]
+    handling: verified
+    unsupported_additions: []
+  - resume_path: cv.sections.skills.1.details
+    output: Kubernetes, progressive delivery, observability, incident response
+    sources:
+      - record: demo-platform-role
+        claim: demo-delivery-skills
+    transformations: [verbatim]
+    handling: verified
+    unsupported_additions: []
+open_questions: []
+

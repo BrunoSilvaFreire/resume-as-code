@@ -1,5 +1,0 @@
-export { SecHead } from './SecHead'
-export { EntryHead } from './EntryHead'
-export type { EntryHeadProps } from './EntryHead'
-export { Bullets } from './Bullets'
-export { Keywords } from './Keywords'

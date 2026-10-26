@@ -1,0 +1,41 @@
+schema_version: 1
+company: Example Cloud
+role: Senior Platform Engineer
+language: en
+source: job-description.md
+responsibilities:
+  - Own cross-team platform architecture
+  - Improve Kubernetes delivery and production reliability
+  - Mentor engineers responsible for production services
+required_skills:
+  - Python
+  - PostgreSQL
+  - distributed systems
+  - API design
+preferred_skills:
+  - progressive delivery
+  - queue-based workloads
+technologies:
+  - Python
+  - PostgreSQL
+  - Kubernetes
+domains:
+  - platform engineering
+  - reliability engineering
+competencies:
+  - distributed systems
+  - technical leadership
+  - incident response
+seniority_signals:
+  - cross-team architecture
+  - mentoring
+keywords:
+  - backend
+  - observability
+  - queues
+constraints:
+  - Keep the resume within two pages
+inferred_requirements:
+  - requirement: Balance shared platform conventions with product-team autonomy
+    basis: Cross-team ownership of a multi-tenant developer platform
+

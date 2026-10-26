@@ -1,0 +1,41 @@
+Last updated in Aug 2026
+
+Example Candidate
+Senior Platform Engineer
+Remote | example.candidate@example.com | example.com | github.com/example-candidate
+
+Summary
+Platform engineer focused on reliable distributed systems, Kubernetes delivery, and practical technical leadership.
+
+Experience
+Senior Platform Engineer, Example Systems
+
+Jan 2022 – present
+
+• Reduced median incident recovery time from 45 minutes to 8 minutes by standardizing service health signals and
+automating rollback decisions.
+
+• Increased safe production deployment frequency from weekly to daily through reusable Kubernetes deployment
+checks and progressive delivery.
+
+• Mentored three engineers through design reviews and incident retrospectives, enabling each to own an on-call
+service.
+
+Selected Projects
+Queue Recovery Controller
+Reliability controller for stalled queue workloads
+
+Mar 2023 – Nov 2023
+
+• Cut stalled-work recovery p99 from 12 minutes to 70 seconds with lease-based claims and bounded retries.
+• Preserved at-least-once processing while making duplicate work observable and safe to replay.
+Skills
+Backend: Python, PostgreSQL, distributed systems, API design
+Platform reliability: Kubernetes, progressive delivery, observability, incident response
+
+Education
+Example University, BSc in Computer Science
+
+2012 – 2016
+
+

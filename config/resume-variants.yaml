@@ -1,0 +1,47 @@
+schema_version: 1
+variants:
+  staff-software-engineer:
+    rendercv_theme: engineeringresumes
+    max_pages: 2
+    section_order: [summary, experience, selected_projects, skills, education]
+    emphasize: [architecture, cross-team influence, technical strategy, delivery]
+    summary_style: concise evidence-backed positioning
+    projects: selective
+    bullets_per_recent_role: 4
+    locale: english
+  backend-platform-engineer:
+    rendercv_theme: engineeringresumes
+    max_pages: 2
+    section_order: [summary, experience, selected_projects, skills, education]
+    emphasize: [distributed systems, reliability, APIs, cloud platforms]
+    summary_style: systems scope and measurable outcomes
+    projects: selective
+    bullets_per_recent_role: 4
+    locale: english
+  game-rendering-engineer:
+    rendercv_theme: engineeringclassic
+    max_pages: 2
+    section_order: [summary, experience, selected_projects, skills, education]
+    emphasize: [rendering, performance, engines, cross-platform systems]
+    summary_style: technical depth and shipped impact
+    projects: prominent
+    bullets_per_recent_role: 4
+    locale: english
+  data-platform-engineer:
+    rendercv_theme: engineeringresumes
+    max_pages: 2
+    section_order: [summary, experience, selected_projects, skills, education]
+    emphasize: [data systems, orchestration, reliability, platform ownership]
+    summary_style: scale, correctness, and business enablement
+    projects: selective
+    bullets_per_recent_role: 4
+    locale: english
+  engineering-leadership:
+    rendercv_theme: harvard
+    max_pages: 2
+    section_order: [summary, experience, skills, selected_projects, education]
+    emphasize: [organizational impact, mentoring, strategy, execution]
+    summary_style: leadership scope backed by delivery evidence
+    projects: optional
+    bullets_per_recent_role: 5
+    locale: english

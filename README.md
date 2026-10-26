@@ -1,230 +1,215 @@
 # Resume as Code
 
-<p align="center">
-  <img src="resume-builder-app/public/favicon.svg" width="72" height="72" alt="Resume Builder logo" />
-</p>
+A local, Git-tracked career knowledge base for repository-aware agents. Maintain detailed career evidence once in modular Markdown records; let an agent retrieve public claims for a job; produce a disposable, audited [RenderCV](https://rendercv.com/) YAML document and PDF.
 
-<div align="center">
+RenderCV v2.8 owns final schema validation, typography, pagination, and PDF rendering. This repository does not contain a competing resume layout engine or require a hosted LLM API.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE) [![Node.js](https://img.shields.io/badge/Node.js-≥18-green.svg)](https://nodejs.org) [![pnpm](https://img.shields.io/badge/pnpm-≥9-orange.svg)](https://pnpm.io)
-
-</div>
-
-<div align="center">
-
-**Stop copy-pasting resumes.** Maintain a single YAML timeline of your career, and let AI agents generate perfectly targeted resumes for every job application — in minutes, not hours.
-
-</div>
-
-![Resume Builder App Screenshot](assets/app-screenshot.png)
-
-> [View sample resume (EN · PDF)](assets/resume.pdf) · [查看中文简历 (PDF)](assets/resume_zh.pdf)
-
----
-
-## Table of Contents
-
-- [Resume as Code](#resume-as-code)
-  - [Table of Contents](#table-of-contents)
-  - [Highlights](#highlights)
-  - [Quick Start](#quick-start)
-    - [Prerequisites](#prerequisites)
-    - [1. Install skills for your agent](#1-install-skills-for-your-agent)
-    - [2. Build your timeline](#2-build-your-timeline)
-    - [3. Configure your profile](#3-configure-your-profile)
-    - [4. Generate a tailored resume](#4-generate-a-tailored-resume)
-    - [5. Preview and export PDF](#5-preview-and-export-pdf)
-  - [Resume Builder App](#resume-builder-app)
-  - [AI Agent Skills](#ai-agent-skills)
-    - [Agent compatibility](#agent-compatibility)
-  - [Project Structure](#project-structure)
-  - [YAML Resume Schema](#yaml-resume-schema)
-  - [License](#license)
-  - [Acknowledgments](#acknowledgments)
-
----
-
-## Highlights
-
-- **Single source of truth** — all career data lives in modular YAML files (profiles, timeline, drafts)
-- **3 AI agent skills** — resume generation, timeline polishing, and interview preparation, powered by LLMs
-- **10-step generation pipeline** — company research → JD analysis → section generation → de-AI humanization → quality review → revision
-- **Local-first web workbench** — Monaco YAML editor + pixel-perfect A4 preview + one-click PDF export via Puppeteer
-- **Dual YAML format** — auto-detects both the new schema v1.0 and legacy [YAMLResume](https://yamlresume.dev/docs) format
-- **Multi-language** — English, Simplified/Traditional Chinese, Spanish, French, Norwegian, with one-click toggle
-- **11+ agent support** — works with Claude Code, Codex, GitHub Copilot, Cursor, Windsurf, Cline, Trae, and more
-
----
-
-## Quick Start
-
-### Prerequisites
-
-- [Node.js](https://nodejs.org) ≥ 18 and [pnpm](https://pnpm.io) ≥ 9
-- An AI coding agent (e.g., [Claude Code](https://claude.ai/claude-code), GitHub Copilot, Cursor, etc.)
-
-### 1. Install skills for your agent
-
-```bash
-git clone https://github.com/zhiweio/resume-as-code.git
-cd resume-as-code
-pnpm install
-pnpm skills:install <agent>   # e.g. claude, copilot, cursor, windsurf, cline
-```
-
-See the full [agent compatibility table](#agent-compatibility) below.
-
-### 2. Build your timeline
-
-Open your AI agent and paste raw descriptions of your past jobs or projects. The **Timeline Polishing Agent** will structure them using STAR (work) or 3W (project) methodology and save to `data/timeline/`.
-
-### 3. Configure your profile
-
-Fill in your static data in `data/profiles/`:
-
-| File               | Content                                           |
-| ------------------ | ------------------------------------------------- |
-| `basics.yml`       | Name, phone, email, URL, summary, social profiles |
-| `education.yml`    | Institutions, degrees, dates                      |
-| `certificates.yml` | Certifications                                    |
-
-Example templates are provided — copy `basics.example.yml` → `basics.yml` and edit.
-
-### 4. Generate a tailored resume
-
-Paste a Job Description into your agent. The **Resume Generation Agent** will:
-
-1. Research the company's business context
-2. Deep-analyze the JD to infer actual role requirements
-3. Match relevant experiences from your timeline
-4. Generate tailored sections (projects → work → skills → summary)
-5. Assemble, de-AI humanize, review, and optionally revise
-
-Output: `data/resumes/{Name}_{JobTitle}_{Company}.yml`
-
-### 5. Preview and export PDF
-
-```bash
-cd resume-builder-app
-pnpm install    # also installs Chrome for Puppeteer
-pnpm dev
-```
-
-Open [localhost:5173](http://localhost:5173), load your YAML, preview, optimize layout, and export PDF.
-
----
-
-## Resume Builder App
-
-A local-first resume workbench with a split-pane editor/preview layout, built with React, Vite, Monaco Editor, Tailwind CSS, and Puppeteer.
-
-**Key features:**
-
-| Feature                  | Description                                                         |
-| ------------------------ | ------------------------------------------------------------------- |
-| Split Editor + Preview   | Monaco YAML editor left, pixel-perfect A4 preview right             |
-| Live Validation          | Real-time YAML syntax and schema validation with inline diagnostics |
-| Deterministic Pagination | Block-level pagination with keep-together logic                     |
-| Optimize Layout          | One-click spacing optimization (0.7×–1.3× scale)                    |
-| PDF Export               | Local Puppeteer + headless Chromium for high-fidelity PDF           |
-| Language Toggle          | Switch 中文 / English rendering with one click                      |
-| Dual Format              | Auto-detects legacy yamlresume or new schema v1.0 YAML              |
-
-**Quick start:**
-
-```bash
-cd resume-builder-app
-pnpm install
-pnpm dev        # Web: :5173, PDF export: :3001
-pnpm build      # Production build
-```
-
-The app also supports the [YAMLResume CLI](https://yamlresume.dev/docs) for LaTeX-based PDF generation:
-
-```bash
-pnpm yamlresume build "data/resumes/Your_Resume.yml"
-```
-
-See [`resume-builder-app/README.md`](resume-builder-app/README.md) for full architecture and development details.
-
----
-
-## AI Agent Skills
-
-Three portable [Agent Skills](https://agentskills.io) under [`skills/`](skills/), each self-contained as `SKILL.md` + `references/` + `assets/`:
-
-| Skill                                                            | Trigger                                 | Output                                         |
-| ---------------------------------------------------------------- | --------------------------------------- | ---------------------------------------------- |
-| [`resume-generation`](skills/resume-generation/SKILL.md)         | User provides a Job Description         | Tailored YAML resume in `data/resumes/`        |
-| [`timeline-polishing`](skills/timeline-polishing/SKILL.md)       | User provides raw work or project notes | Structured YAML in `data/timeline/`            |
-| [`interview-preparation`](skills/interview-preparation/SKILL.md) | Resume + JD Analysis + Company Analysis | Markdown interview guide in `data/interviews/` |
-
-### Agent compatibility
-
-```bash
-pnpm skills:install <agent>          # one agent
-pnpm skills:install all              # all supported
-pnpm skills:uninstall <agent>|all    # clean removal
-```
-
-| Agent                                                                         | How                                                                              |
-| ----------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
-| **Claude Code**                                                               | `pnpm skills:install claude` or `/plugin marketplace add zhiweio/resume-as-code` |
-| **GitHub Copilot**                                                            | Zero-config (committed `.github/copilot-instructions.md`)                        |
-| **Codex** / **OpenCode** / **Aider** / **Qoder** / **Continue** / **RooCode** | Zero-config (reads `AGENTS.md`)                                                  |
-| **Cursor**                                                                    | Zero-config (via `AGENTS.md`) or `pnpm skills:install cursor`                    |
-| **Trae**                                                                      | Zero-config (committed `.trae/rules/project_rules.md`)                           |
-| **Windsurf**                                                                  | `pnpm skills:install windsurf`                                                   |
-| **Cline** / **RooCode**                                                       | `pnpm skills:install cline`                                                      |
-
-See [`skills/README.md`](skills/README.md) for detailed agent instructions and how to add new agents.
-
----
-
-## Project Structure
+## Architecture
 
 ```text
-.
-├── AGENTS.md                 # Universal entry point for all coding agents
-├── skills/                   # Three portable Agent Skills
-│   ├── resume-generation/    #   JD → tailored YAML resume (10-step pipeline)
-│   ├── timeline-polishing/   #   Raw notes → STAR/3W YAML timeline
-│   └── interview-preparation/#   Resume + JD → interview guide
-├── scripts/
-│   └── install-skills.mjs    # One-command multi-agent installer
-├── resume-builder-app/       # Local-first web workbench (React + Vite + Puppeteer)
-├── data/                     # All user-owned content
-│   ├── profiles/             #   Static candidate data (basics, education, certificates)
-│   ├── timeline/             #   Master timeline library (polished YAML)
-│   ├── drafts/               #   Raw notes for polishing
-│   ├── resumes/              #   Generated tailored resumes
-│   ├── interviews/           #   Generated interview guides
-│   └── .cache/               #   Per-run intermediate artifacts (gitignored)
-└── docs/
-    └── yaml-schema.md        # YAML format reference (new schema v1.0 + legacy)
+career/ Markdown + profile YAML (canonical)
+  -> requirements.yaml (JD analysis)
+  -> deterministic metadata retrieval + agent semantic review
+  -> resume.yaml + claim-manifest.yaml (application-specific)
+  -> RenderCV Pydantic validation
+  -> RenderCV/Typst PDF
+  -> extracted-text, page-count, provenance, and quality review
 ```
 
----
+The source model and output model are intentionally separate:
 
-## YAML Resume Schema
+| Canonical career records | Disposable RenderCV application |
+| --- | --- |
+| Complete technical context and private boundaries | Concise claims for one role |
+| Stable record and claim IDs | RenderCV `cv`/`design`/`locale`/`settings` |
+| Evidence, confidence, alternate framings | Limited page count and deterministic layout |
+| Reused across applications | Regenerated when facts or JD change |
 
-The builder supports two YAML formats, auto-detected at load time:
+## Repository structure
 
-- **New Schema v1.0** — discriminated section types, stable IDs, visibility flags, layout hints, theme overrides
-- **Legacy (YAMLResume)** — compatible with the [YAMLResume](https://yamlresume.dev/docs) ecosystem and its LaTeX compiler
+```text
+career/                     personal canonical data (empty in the public starter)
+  profile/profile.yaml      contact, education, certificates
+  experience/               company, role, initiative, decision, incident records
+  projects/                 independent/cross-role project records
+  knowledge/                reusable context and references
+  evidence/                 sources supporting claims
+  index.md                  generated faceted links, never canonical facts
+applications/<id>/          one complete job-application audit trail
+config/resume-variants.yaml role-family presentation defaults
+schemas/                    record, profile, JD-analysis, and manifest contracts
+career_kb/                  small deterministic CLI
+skills/                     portable agent workflows
+examples/demo/              fictional end-to-end rehearsal corpus
+docs/                       schema, migration, and operating runbook
+```
 
-For full schema documentation with examples and a comparison table, see **[docs/yaml-schema.md](docs/yaml-schema.md)**.
+Legacy `data/` templates are retained for migration reference, but the modular `career/` and `applications/` trees are the active architecture.
 
----
+## Installation
 
-## License
+Prerequisites: Python 3.12+ and [uv](https://docs.astral.sh/uv/). Poppler's `pdfinfo` and `pdftotext` are optional but recommended for page-count and extracted-text review.
 
-[MIT](LICENSE)
+```bash
+uv sync
+uv run career --help
 
----
+# RenderCV is an optional, independently pinned environment extra
+uv run --extra render rendercv --version
+```
 
-## Acknowledgments
+The current pin is `rendercv[full]==2.8` in `pyproject.toml`. Generated YAML uses the versioned official schema URL:
 
-- [blader/humanizer](https://github.com/blader/humanizer) — English AI writing pattern detection and removal
-- [op7418/humanizer-zh](https://github.com/op7418/humanizer-zh) — Chinese AI writing pattern detection and removal
-- [itMrBoy/resumePolice](https://github.com/itMrBoy/resumePolice) — Comprehensive resume review framework
+```text
+https://raw.githubusercontent.com/rendercv/rendercv/refs/tags/v2.8/schema.json
+```
+
+See the official [installation guide](https://docs.rendercv.com/user_guide/index.html), [YAML structure](https://docs.rendercv.com/user_guide/yaml_input_structure/), and [CLI reference](https://docs.rendercv.com/user_guide/cli_reference/).
+
+## Agent setup
+
+Codex, OpenCode, Cursor, and other `AGENTS.md`-aware tools work without installation. A fresh agent must read `AGENTS.md` and then the task-specific `skills/*/SKILL.md`.
+
+Claude Code and other Skills-compatible agents can point their project skill directory at `skills/`. For deep RenderCV design work, optionally install RenderCV's official generated skill:
+
+```bash
+npx skills add rendercv/rendercv-skill
+```
+
+The core repository workflow does not require Node or `npx`.
+
+## Add experience
+
+```bash
+uv run career new-record \
+  career/experience/example-company/streaming-platform.md \
+  --id example-streaming-platform \
+  --type initiative \
+  --title "Streaming platform"
+```
+
+Edit the Markdown body without compressing it into resume bullets. Put reusable factual statements in frontmatter `claims[]`; link evidence and related records by ID. Then:
+
+```bash
+uv run career validate
+uv run career index
+```
+
+See [Record schema](docs/record-schema.md) for fields, optional body sections, confidence, visibility, and cross-reference rules.
+
+## Generate a tailored resume
+
+Give a repository-aware agent the JD and ask it to use `skills/resume-generation/SKILL.md`. The operational sequence is:
+
+```bash
+uv run career init-application 2026-08-company-role \
+  --jd /path/to/job-description.md \
+  --variant staff-software-engineer
+
+# Agent writes requirements.yaml from the preserved JD
+uv run career retrieve applications/2026-08-company-role
+
+# Agent reviews the whole corpus, writes resume.yaml + claim-manifest.yaml + review.md
+uv run career validate-application applications/2026-08-company-role
+uv run --extra render career validate-resume applications/2026-08-company-role/resume.yaml
+uv run --extra render career render applications/2026-08-company-role
+uv run career validate-application applications/2026-08-company-role --require-pdf
+```
+
+`career retrieve` deliberately uses exact normalized metadata and a small text-keyword bonus. It creates a transparent ranked first pass, not a semantic oracle. The agent must inspect relevant zero-score records and document selection/rejection reasoning.
+
+## Application artifacts
+
+A completed directory contains:
+
+| File | Purpose |
+| --- | --- |
+| `application.yaml` | ID, role-family variant, page budget, status |
+| `job-description.md` | Untouched source JD |
+| `requirements.yaml` | Structured responsibilities, skills, seniority, keywords, and grounded inferences |
+| `retrieval-report.md` | Ranked records and agent selection notes |
+| `claim-manifest.yaml` | Exact output paths mapped to canonical `record#claim` sources |
+| `resume.yaml` | Disposable RenderCV v2.8 input |
+| `resume.pdf` | RenderCV/Typst output |
+| `resume.txt` | Extracted PDF text for review |
+| `validation.md` | RenderCV version, commands, page count, placeholder check |
+| `review.md` | Agent quality review and unresolved questions |
+
+## Provenance and truthfulness
+
+The validator first checks structural facts: profile/contact fields, employer, role, dates, projects, education, and certificates must match public records or `profile.yaml` (including one side of a canonical bilingual name). It then extracts the headline and narrative/skill statements from `resume.yaml`. Each must have an exact `resume_path` and `output` match in `claim-manifest.yaml`. Every manifest source must resolve to a public record and public claim. Non-public sources, missing claims, stale paths, non-empty `unsupported_additions`, and unacknowledged uncertainty fail validation.
+
+This makes unsupported structure and text fail closed: structural fields are checked against record/profile metadata, while narrative statements are audited by the manifest.
+
+## Rebuild an application
+
+Ask the agent to rebuild `applications/<id>` using the resume-generation skill. It re-runs retrieval, updates `resume.yaml` and `claim-manifest.yaml` together, validates, renders, inspects `resume.txt`, and refreshes `review.md`. Never edit the PDF directly.
+
+## Validate the knowledge base
+
+```bash
+uv run career validate
+```
+
+This checks frontmatter parsing, schema fields, stable/unique record and claim IDs, related-record links, evidence types, visibility/confidence values, profile structure, and missing evidence.
+
+## Validate and render a generated resume
+
+```bash
+uv run career validate-application applications/<id>
+uv run --extra render career validate-resume applications/<id>/resume.yaml
+uv run --extra render career render applications/<id>
+```
+
+The first command checks repository contracts and provenance. The second invokes RenderCV's own Pydantic validation path with all outputs disabled. The third renders only the PDF through RenderCV.
+
+## Resume variants
+
+`config/resume-variants.yaml` includes defaults for staff software, backend/platform, game/rendering, data platform, and engineering leadership roles. Variants define theme, page budget, ordering, emphasis, summary style, project policy, and locale; they contain no career facts.
+
+## Legacy migration
+
+Existing `data/timeline/*.yml` files are preserved. Convert the old top-level `timeline:` shape one file at a time:
+
+```bash
+uv run career migrate-legacy data/timeline/Work_20200101-20211231_Engineer.yml \
+  --destination career/experience/imported
+uv run career validate
+```
+
+Imports default to `internal` and `user-supplied`; review their dates, split natural ownership boundaries, attach evidence, and explicitly approve public claims. See [Migration](docs/migration.md).
+
+## End-to-end demo
+
+The fictional demo is safe to inspect and reproduces the complete workflow:
+
+```bash
+uv run career --root examples/demo validate
+uv run career --root examples/demo index
+uv run career --root examples/demo retrieve applications/2026-08-example-platform
+uv run career --root examples/demo validate-application applications/2026-08-example-platform
+uv run --extra render career --root examples/demo render applications/2026-08-example-platform
+uv run career --root examples/demo validate-application applications/2026-08-example-platform --require-pdf
+```
+
+The PDF is written to `examples/demo/applications/2026-08-example-platform/resume.pdf`.
+
+## Tests
+
+```bash
+uv run python -m unittest discover -s tests -v
+uv run --extra render python -m unittest discover -s tests -v
+```
+
+The second command includes the real RenderCV validation test.
+
+## Troubleshooting
+
+- `rendercv is not installed`: prefix the command with `uv run --extra render`.
+- Manifest path mismatch: regenerate the exact dotted path after moving/reordering a section; do not merely change the output string.
+- Non-public source error: create a separate approved public claim or keep the statement out of the resume.
+- Missing evidence error: add an evidence record, correct its ID, or leave the claim unverified.
+- Too many pages: shorten low-relevance content or use the variant budget; do not change the PDF outside RenderCV.
+- Zero retrieval matches: metadata may use different language; search record bodies and review the full corpus before concluding there is no evidence.
+
+For the copy-paste operating checklist, see [Runbook](docs/runbook.md).
